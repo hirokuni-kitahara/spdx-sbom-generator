@@ -27,6 +27,7 @@ RUN apk add --update ruby && gem install bundler
 RUN apk add go
 
 # Java
+RUN apk add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add --update maven
 
 # Node

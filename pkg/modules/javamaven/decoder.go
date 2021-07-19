@@ -428,6 +428,13 @@ func getTransitiveDependencyList(workingDir string) (map[string][]string, error)
 	path := filepath.Join(os.TempDir(), "JavaMavenTDTreeOutput.txt")
 	os.Remove(path)
 
+	commandToInstall := exec.Command("mvn", "install", "-DskipTests=true", "-amd")
+	commandToInstall.Dir = workingDir
+	_, errI := commandToInstall.CombinedOutput()
+	if errI != nil {
+		return nil, errI
+	}
+
 	command := exec.Command("mvn", "dependency:tree", "-DoutputType=dot", "-DappendOutput=true", "-DoutputFile="+path)
 	command.Dir = workingDir
 	out, err := command.CombinedOutput()
